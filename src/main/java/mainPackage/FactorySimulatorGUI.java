@@ -197,6 +197,8 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
             }
 
         }
+        
+        
 
         if (disp == obj) {
             dispatcherNumbers++;
