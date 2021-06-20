@@ -24,7 +24,11 @@ public class Machine implements Runnable {
     public static int MAX_CONSUMPTION_TIME;
     public static int MAX_PRODUCTION;
     public boolean requestStop;
-    public ConveyorBelt belt[];
+    private ConveyorBelt belt[];
+
+    public ConveyorBelt[] getBelt() {
+        return belt;
+    }
     Graphics g;
     int x;
 

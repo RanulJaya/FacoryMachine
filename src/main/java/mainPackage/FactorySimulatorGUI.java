@@ -137,11 +137,11 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
 
         for (int i = 0; i < machineObj.size(); i++) {
             //machine
-            machineObj.get(0).belt[0].drawBelt(g, b, y, 80, 80);
-            machineObj.get(0).belt[1].drawBelt(g, b, 130, 80, 80);
-            machineObj.get(0).belt[2].drawBelt(g, b, 220, 80, 80);
-            machineObj.get(0).belt[3].drawBelt(g, b, 310, 80, 80);
-            machineObj.get(0).belt[4].drawBelt(g, b, 400, 80, 80);
+            machineObj.get(0).getBelt()[0].drawBelt(g, b, y, 80, 80);
+            machineObj.get(0).getBelt()[1].drawBelt(g, b, 130, 80, 80);
+            machineObj.get(0).getBelt()[2].drawBelt(g, b, 220, 80, 80);
+            machineObj.get(0).getBelt()[3].drawBelt(g, b, 310, 80, 80);
+            machineObj.get(0).getBelt()[4].drawBelt(g, b, 400, 80, 80);
         }
 
         x = 120;
