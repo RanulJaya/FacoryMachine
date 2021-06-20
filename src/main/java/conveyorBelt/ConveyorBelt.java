@@ -10,6 +10,7 @@ import Tools.Dispatcher;
 import com.mycompany.factorysimulator.Parcel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -32,7 +33,7 @@ public class ConveyorBelt {
     }
 
     public ConveyorBelt() {
-        this.maxCapacity = 10;
+        this.maxCapacity = 8;
         this.queue = new PriorityQueue<>();
         this.connectedMachine = null;
         this.connectedDispatcher = null;
@@ -44,7 +45,7 @@ public class ConveyorBelt {
             connectedMachine = machine;
 
             Random rb = new Random();
-            char c = (char) (rb.nextInt(26) + 'a');
+            char c = (char) (rb.nextInt(26) + 'A');
 
             Random rand = new Random();
 
@@ -98,14 +99,39 @@ public class ConveyorBelt {
     }
 
     public boolean postParcel(Parcel<?> p, Machine machine) {
-        queue.add(p);
-        
-        return true;
+
+        if (machine != null) {
+
+            if (queue.size() > 1) {
+
+                if (queue.peek().compareTo(p) == -1) {
+
+                }
+
+                if (queue.peek().compareTo(p) == 0) {
+
+                }
+                if (queue.peek().compareTo(p) == 1) {
+
+                }
+
+            }
+
+            queue.add(p);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Parcel<?> getFirstParcel(Dispatcher dispatcher) {
 
-        return null;
+        if (connectedDispatcher != null) {
+            return queue.peek();
+        } else {
+            return null;
+        }
 
     }
 
@@ -117,9 +143,19 @@ public class ConveyorBelt {
 
     public void drawBelt(Graphics g, int x, int y, int width, int height) {
 
-        if (connectedMachine != null && !(isFull())) {
-            queue.element().drawBox(g, x, y, width, height);
-
+        Iterator<Parcel<?>> iter = queue.iterator();
+        if (connectedMachine != null) {
+            
+            if(!(isFull())){
+                g.setColor(Color.red);
+                g.fillOval(40, y, width, height);
+            }
+            
+            
+            while (iter.hasNext()) {
+                iter.next().drawBox(g, x, y, 80, 80);
+                x+=80;
+            }
         }
 
         if (connectedMachine == null) {

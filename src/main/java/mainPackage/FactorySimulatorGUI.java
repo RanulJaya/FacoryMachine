@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.Timer;
 
 /**
  *
@@ -45,6 +46,8 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
     Machine machine;
     ArrayList<Machine> machineObj;
     ArrayList<Dispatcher> dispatcherObj;
+    int b;
+    private Timer timer;
 
     public FactorySimulatorGUI() {
         try {
@@ -112,10 +115,10 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
         panel3.setLayout(box2);
         panel3.add(numOfMachines);
 
-        for (int i = 0; i < 5; i++) {
-            machineObj.add(null);
-        }
+        this.timer = new Timer(20, this);
+        timer.start();
 
+        b = 120;
     }
 
     @Override
@@ -127,7 +130,18 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
 
         for (int i = 0; i < 8; i++) {
             belt.drawBelt(g, x, y, 80, 80);
+
             x += 80;
+
+        }
+
+        for (int i = 0; i < machineObj.size(); i++) {
+            //machine
+            machineObj.get(0).belt[0].drawBelt(g, b, y, 80, 80);
+            machineObj.get(0).belt[1].drawBelt(g, b, 130, 80, 80);
+            machineObj.get(0).belt[2].drawBelt(g, b, 220, 80, 80);
+            machineObj.get(0).belt[3].drawBelt(g, b, 310, 80, 80);
+            machineObj.get(0).belt[4].drawBelt(g, b, 400, 80, 80);
         }
 
         x = 120;
@@ -180,7 +194,7 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
 
-        if (mac == obj) {
+        if (obj == mac) {
 
             machineNumbers++;
 
@@ -190,17 +204,16 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
             } else if (machineNumbers <= 5) {
                 numOfMachines.setText(">>>Number of Dispatchers = " + dispatcherNumbers + ", Number of Machines = " + machineNumbers);
 
-                machineObj.set(machineNumbers - 1, new Machine(getGraphics()));
+                machineObj.add(new Machine(getGraphics()));
 
                 Thread t1 = new Thread(machineObj.get(machineNumbers - 1));
                 t1.start();
+
             }
 
         }
-        
-        
 
-        if (disp == obj) {
+        if (obj == disp) {
             dispatcherNumbers++;
 
             if (dispatcherNumbers >= 6) {
@@ -229,7 +242,7 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
             }
         }
 
-        if (removeMac == obj) {
+        if (obj == removeMac) {
 
             if (machineNumbers <= 0) {
 
@@ -240,14 +253,16 @@ public class FactorySimulatorGUI extends JPanel implements ActionListener {
 
                 machineNumbers--;
                 machineObj.get(machineNumbers).requestStop = false;
-                machineObj.set(machineNumbers, null);
+                machineObj.remove(machineNumbers);
 
                 numOfMachines.setText(">>>Number of Dispatchers = " + dispatcherNumbers + ", Number of Machines = " + machineNumbers);
 
             }
         }
 
-        repaint();
+        if (obj == timer) {
+            repaint();
+        }
     }
 
 }
